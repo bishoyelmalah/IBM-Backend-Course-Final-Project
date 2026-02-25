@@ -8,6 +8,10 @@ def emotion_detector(text_to_analyse):
     response = requests.post(url, json = my_Obj, headers = headers)
     formatted_res = json.loads(response.text)
 
+    
+    if response.status_code == 400:
+        return {"anger": None, "disgust": None, "fear": None, "joy": None, "sadness": None, "dominant_emotion": None}
+
     emotions_dict = formatted_res["emotionPredictions"][0]["emotion"]
     dominant_emotion = max(emotions_dict, key=emotions_dict.get)
     emotions_dict["dominant_emotion"] = dominant_emotion
